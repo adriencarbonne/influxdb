@@ -1632,7 +1632,6 @@ func (s *Server) WriteSeries(database, retentionPolicy string, points []Point) (
 	}
 
 	// Write data for each shard to the Broker.
-	var err error
 	var maxIndex uint64
 	for i, d := range shardData {
 		index, err := s.client.Publish(&messaging.Message{
@@ -1652,7 +1651,7 @@ func (s *Server) WriteSeries(database, retentionPolicy string, points []Point) (
 		}
 	}
 
-	return maxIndex, err
+	return maxIndex, nil
 }
 
 // applyWriteRawSeries writes raw series data to the database.
